@@ -16,12 +16,13 @@ export class TrainBox extends Component {
       day: '',
       hour: '',
       minutes: '',
-      type: '',
+      bird: '',
+
     }
   }
 
   handleForm(e) {
-    e.preventDefault;
+    e.preventDefault();
     console.log(this.state)
     fetch('/predict-bird', {
       method: 'POST',
@@ -34,17 +35,16 @@ export class TrainBox extends Component {
         hour: this.state.hour,
         minutes: this.state.minute,
       })
-    })
+    }).then((response) => response.json())
+      .then((data) => this.setState({output_bird: data.result}))
   }
 
   handleBird(e) {
-    this.setState({type: e.target.value})
+    this.setState({bird: e.target.value})
   }
 
   handleName(e) {
-    console.log(this.state)
-    e.preventDefault;
-    console.log(this.state)
+    e.preventDefault();
     fetch('/predict-time', {
       method: 'POST',
       headers: {
@@ -52,9 +52,10 @@ export class TrainBox extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        type: this.state.bird,
+        name: this.state.bird,
       })
-    })
+    }).then((response) => response.json())
+      .then((data) => this.setState({output_time: data.time_result, output_day: data.r_day}))
   }
 
   handleDay(e) {
@@ -74,7 +75,7 @@ export class TrainBox extends Component {
       <div className="div2">
         <div className="predictionForm">
           <h3> Prediction </h3>
-          <p> Algorithm Predicted that at this time we will see = {this.state.answer} </p>
+          <p> Algorithm Predicted that at this time we will see = {this.state.output_bird} </p>
           <form onSubmit={this.handleForm}>
             <FormGroup>
               <input
@@ -105,7 +106,7 @@ export class TrainBox extends Component {
         </div>
         <div>
           <h5> Predict By Name </h5>
-          <p> Algorithm Predicted that it is likely to see the bird {this.state.answer} </p>
+          <p> Algorithm Predicted that it is likely to see the bird during {this.state.output_day} at {this.state.output_time} </p>
           <form onSubmit={this.handleName}>
             <FormGroup>
               <input

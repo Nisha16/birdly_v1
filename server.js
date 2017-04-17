@@ -11,6 +11,11 @@ var connection = mysql.createConnection({
    database : 'askTia'
 });
 
+// ExpressJS application Implementation
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+app.use(express.static('./build'));
+
 var dt;
 var dt_1;
 
@@ -77,10 +82,6 @@ var training_model = function() {
 console.log("calling x");
 training_model();
 
-// ExpressJS application Implementation
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json());
-app.use(express.static('./build'));
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, './build', 'home.html'));
@@ -139,16 +140,16 @@ app.post('/predict-bird',function(req,res){
 
   result = dt.classify([day,hr,min,s]);
   console.log("result: ", result)
-  res.render('index', {
-    classifier_result: Object.keys(result)
-  });
+  res.send(JSON.stringify({
+    result: Object.keys(result)
+  }));
 });
 
 
 var num_mapping = {0:"sunday", 1:"monday", 2:"tuesday", 3:"wednesday", 4:"thursday" , 5:"friday",6:"saturday"};
 app.post('/predict-time',function(req,res){
   console.log("POST request");
-  var bird = req.body.type.toLowerCase();
+  var bird = req.body.name.toLowerCase();
   connection.query('SELECT day, hour, minutes from birds', function(err, rows, fields) {
   if (!err){
     // target as bird
@@ -182,10 +183,12 @@ app.post('/predict-time',function(req,res){
     console.log(avg_min);
     var output = dt_1.classify([result,avg_hr,avg_min,bird])
     console.log("result: ", result)
-    res.render('index', {
-      time_result: Object.keys(output),
-      r_day: resultant_day
-    });
+    res.send(JSON.stringify(
+      {
+        time_result: Object.keys(output),
+        r_day: resultant_day
+      }
+    ));
   }
  else{
    console.log('Error while performing Query.');
