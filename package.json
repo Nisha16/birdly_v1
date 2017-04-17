@@ -1,0 +1,27 @@
+{
+  "name": "birdly",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "machine-learning": "^0.2.0",
+    "machine_learning": "^0.1.1",
+    "moment": "^2.18.1",
+    "mysql": "^2.13.0",
+    "react": "^15.5.4",
+    "react-bootstrap": "^0.30.8",
+    "react-datetime": "^2.8.9",
+    "react-dom": "^15.5.4"
+  },
+  "devDependencies": {
+    "react-scripts": "0.9.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "server": "node server.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
