@@ -186,7 +186,7 @@ app.post('/predict-time',function(req,res){
     console.log("result: ", result)
     res.send(JSON.stringify(
       {
-        time_result: Object.keys(output),
+        time_result: Object.keys(output)[0],
         r_day: resultant_day
       }
     ));
