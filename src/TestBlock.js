@@ -19,6 +19,7 @@ export class BirdForm extends Component {
 
   handleTrain(e) {
     e.preventDefault();
+    this.setState({training:true})
     fetch('/train', {
       method: 'POST',
       headers: {
@@ -26,7 +27,7 @@ export class BirdForm extends Component {
         'Content-Type': 'application/json',
       },
   }).then((response) => response.json())
-    .then((data) => this.setState({training: data.train}))
+    .then((data) => this.setState({training: false}))
   }
 
   handleSubmit(e) {
