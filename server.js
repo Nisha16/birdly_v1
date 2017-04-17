@@ -140,8 +140,9 @@ app.post('/predict-bird',function(req,res){
 
   result = dt.classify([day,hr,min,s]);
   console.log("result: ", result)
+  result = Object.keys(result)[0]
   res.send(JSON.stringify({
-    result: Object.keys(result)
+    result: result
   }));
 });
 
@@ -203,4 +204,4 @@ app.post('/train', function(req, res){
   res.send(JSON.stringify({train:"training"}))
 });
 
-app.listen(9000);
+app.listen(8080);
