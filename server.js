@@ -200,6 +200,7 @@ app.post('/predict-time',function(req,res){
 app.post('/train', function(req, res){
   console.log("calling training_model manually");
   training_model()
+  res.send(JSON.stringify({train:"training"}))
 });
 
 app.listen(9000);

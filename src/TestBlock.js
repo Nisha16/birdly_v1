@@ -13,6 +13,7 @@ export class BirdForm extends Component {
       moment: '',
       bird: '',
       date: '',
+      training: false,
     }
   }
 
@@ -24,7 +25,8 @@ export class BirdForm extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-  });
+  }).then((response) => response.json())
+    .then((data) => this.setState({training: data.train}))
   }
 
   handleSubmit(e) {
@@ -54,9 +56,15 @@ export class BirdForm extends Component {
   }
 
   render() {
+    let train_button = null;
+    if (this.state.training === "training") {
+      train_button = <Button id="submit" bsStyle="primary" bsSize="large" onClick={this.handleTrain} disabled="true">Training Please Wait </Button>
+    } else {
+      train_button = <Button id="submit" bsStyle="primary" bsSize="large" onClick={this.handleTrain}>Train</Button>
+    }
     return (
       <div className="textblock">
-        <h3>{this.state.bird} spotted at {this.state.moment} </h3>
+        <h3> Input </h3>
         <form onSubmit={this.handleSubmit}>
           <FormGroup>
             <input
@@ -67,13 +75,13 @@ export class BirdForm extends Component {
             />
           </FormGroup>
           <FormGroup>
-            <Datetime onChange={this.handleDate}/>
+            <Datetime onChange={this.handleDate} inputProps={{placeholder:"Enter Date and Time"}}/>
           </FormGroup>
-          <Button bsStyle="default" type="submit">Submit</Button>
+          <Button id="submit" bsStyle="primary" bsSize="large" type="submit">Submit</Button>
         </form>
         <div className="train">
           <h3> Train Your Algorithm </h3>
-          <Button onClick={this.handleTrain} disabled={this.state.disabled}>Train</Button>
+          {train_button}
         </div>
       </div>
     )

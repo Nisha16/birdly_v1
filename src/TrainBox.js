@@ -75,7 +75,7 @@ export class TrainBox extends Component {
       <div className="div2">
         <div className="predictionForm">
           <h3> Prediction </h3>
-          <p> Algorithm Predicted that at this time we will see = {this.state.output_bird} </p>
+          <p> Algorithm Predicted that at this time we will see = <b>{this.state.output_bird}</b>  </p>
           <form onSubmit={this.handleForm}>
             <FormGroup>
               <input
@@ -89,7 +89,7 @@ export class TrainBox extends Component {
               <input
                 className="form-control"
                 type="text"
-                placeholder="Hour of the day"
+                placeholder="Hour of the day in 24hrs format"
                 onChange={this.handleHour}
               />
             </FormGroup>
@@ -101,12 +101,12 @@ export class TrainBox extends Component {
                 onChange={this.handleMinute}
               />
             </FormGroup>
-            <Button bsStyle="default" type="submit">Submit</Button>
+            <Button id="submit" bsStyle="primary" bsSize="large" type="submit">Submit</Button>
           </form>
         </div>
-        <div>
-          <h5> Predict By Name </h5>
-          <p> Algorithm Predicted that it is likely to see the bird during {this.state.output_day} at {this.state.output_time} </p>
+        <div id='predictname'>
+          <h3> Predict By Name </h3>
+          <p> Algorithm Predicted that it is likely to see the bird during <b>{this.state.output_day}</b> at <b>{this.state.output_time}</b> </p>
           <form onSubmit={this.handleName}>
             <FormGroup>
               <input
@@ -116,7 +116,7 @@ export class TrainBox extends Component {
                 onChange={this.handleBird}
               />
             </FormGroup>
-            <Button bsStyle="default" type="submit">Submit</Button>
+            <Button id="submit" bsStyle="primary" bsSize="large" type="submit">Submit</Button>
           </form>
         </div>
       </div>
